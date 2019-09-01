@@ -81,7 +81,7 @@ def pvp_online_servidor(skt):
             # Caso seja a vez do cliente, posição é definido por recvfrom
             else:
                 print("Aguardando jogada do adversário...")
-                skt.sendto(str(tabuleiro).encode(),adr)
+                skt.sendto("YOUR_TURN".encode(),adr)
                 msg,adr = skt.recvfrom(1024)
                 posicao = int(msg.decode())
 
@@ -116,6 +116,7 @@ def pvp_online_cliente(skt,servidorIP):
         print("Esperando a vez...")
         msg,adr = skt.recvfrom(1024)
         msg = msg.decode()
+        print(msg)
 
         # Caso não receba uma lista, o jogo acabou
         if msg[0]!="[":
@@ -133,6 +134,10 @@ def pvp_online_cliente(skt,servidorIP):
             # Receber e mostrar o tabuleiro
             recv_tabuleiro(msg)
 
+        msg, adr = skt.recvfrom(1024)
+        msg = msg.decode()
+
+        if msg == "YOUR_TURN":
             # Receber a jogada do jogador
             print("SUA VEZ")
             posicao = int(input(">>> "))
@@ -146,8 +151,6 @@ def pvp_online_cliente(skt,servidorIP):
 
             if msg.decode() == "MOVE_ERROR":
                 print("Jogada incorreta, boy.")
-            else:
-                recv_tabuleiro(msg.decode())
 
             
         
