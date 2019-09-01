@@ -9,6 +9,6 @@ def ouvir():
        
 def falar(mensagem,adr):
     skt = socket(AF_INET,SOCK_DGRAM)
-    skt.sendto(mensagem,(adr,5001))
+    skt.sendto(mensagem.encode(),(adr,5001))
     skt.close()
         
