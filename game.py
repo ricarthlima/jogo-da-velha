@@ -113,10 +113,8 @@ def pvp_online_cliente(skt,servidorIP):
     skt.sendto("HANDSHAKE".encode(),(servidorIP,5001))
     
     while True:
-        print("Esperando a vez...")
         msg,adr = skt.recvfrom(1024)
         msg = msg.decode()
-        print(msg)
 
         # Caso não receba uma lista, o jogo acabou
         if msg[0]!="[":
@@ -126,7 +124,7 @@ def pvp_online_cliente(skt,servidorIP):
             elif msg == "LOSER":
                 print("Tu é fraco. Foi gg izi")
                 break
-            else:
+            elif msg == "DRAW":
                 print("Empatou, comadres")
                 break
         # Caso receba um tabuleiro, a coisa tem que continuar
@@ -134,6 +132,7 @@ def pvp_online_cliente(skt,servidorIP):
             # Receber e mostrar o tabuleiro
             recv_tabuleiro(msg)
 
+        print("Esperando a vez...")
         msg, adr = skt.recvfrom(1024)
         msg = msg.decode()
 
@@ -151,6 +150,8 @@ def pvp_online_cliente(skt,servidorIP):
 
             if msg.decode() == "MOVE_ERROR":
                 print("Jogada incorreta, boy.")
+            else:
+                recv_tabuleiro(msg.decode())
 
             
         
