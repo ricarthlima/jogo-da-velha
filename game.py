@@ -57,15 +57,15 @@ def pvp_online_servidor(skt):
         resultado = aux_modules.condicao_vitoria(tabuleiro)
         if resultado == 0:
             print("BOLA VENCE A PARTIDA. ESTÁ IMPLACÁVEL!")
-            skt.sendto("LOSER",adr)
+            skt.sendto("LOSER".encode(),adr)
             break
         elif resultado ==1:
             print("XIS VENCE A PARTIDA. ESTÁ LENDÁRIO!!")
-            skt.sendto("WINNER",adr)
+            skt.sendto("WINNER".encode(),adr)
             break
         elif resultado == "EMPATE":
             print("EMPATOOOOOU!!! DOIS NOOBS JOGANDO! LIXOS!")
-            skt.sendto("DRAW")
+            skt.sendto("DRAW".encode(),adr)
             break
         else:
             if vez == 0:
