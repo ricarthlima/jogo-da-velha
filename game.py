@@ -1,7 +1,7 @@
 import random
 import aux_modules
 from socket import *
-def pvp():
+def pvp_local():
     tabuleiro = [-1,-1,-1,-1,-1,-1,-1,-1,-1]
     vez = random.randint(0,1)
 
@@ -105,8 +105,10 @@ def pvp_online_cliente(skt,servidorIP):
                 break
             elif msg == "LOSER":
                 print("Tu é fraco. Foi gg izi")
+                break
             else:
                 print("Empatou, comadres")
+                break
         else:
             msg = msg[1:-1]
             tabuleiro = msg.split(", ")
