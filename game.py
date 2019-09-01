@@ -123,7 +123,7 @@ def pvp_online_cliente(skt,servidorIP):
             aux_modules.printarTabuleiro(tabuleiro)
             print("SUA VEZ")
             posicao = input(">>> ")
-            if posicao>=0 and posicao <=8 and tabuleiro[posicao]==-1:
+            if int(posicao>=0) and int(posicao <=8) and tabuleiro[posicao]==-1:
                 skt.sendto(posicao.encode(),(servidorIP,5001))
                 print("Esperando confirmação da jogada...")
                 msg,adr = skt.recvfrom(1024)
