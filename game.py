@@ -51,6 +51,7 @@ def pvp_online_servidor(skt):
     msg,adr = skt.recvfrom(1024)
     tabuleiro = [-1,-1,-1,-1,-1,-1,-1,-1,-1]
     vez = random.randint(0,1)
+    jogadaIncorretaServer = False
     #0 = Vez do servidor;
     #1 = Vez do cliente.
     while True:
@@ -72,7 +73,9 @@ def pvp_online_servidor(skt):
             posicao = -1
 
             # Envia o tabuleiro
-            skt.sendto(str(tabuleiro).encode(),adr)
+            if not jogadaIncorretaServer:
+                skt.sendto(str(tabuleiro).encode(),adr)
+            jogadaIncorretaServer = False
 
             # Caso seja o servidor que vai jogar, posição é definido por input
             if vez == 0:                
@@ -98,6 +101,7 @@ def pvp_online_servidor(skt):
                     skt.sendto("MOVE_ERROR".encode(),adr)
                 else:
                     print("Jogada incorreta. Perdeu, pai")
+                    jogadaIncorretaServer = True
                     
             aux_modules.printarTabuleiro(tabuleiro)
 
