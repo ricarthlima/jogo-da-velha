@@ -57,12 +57,15 @@ def pvp_online_servidor(skt):
         resultado = aux_modules.condicao_vitoria(tabuleiro)
         if resultado == 0:
             print("BOLA VENCE A PARTIDA. ESTÁ IMPLACÁVEL!")
+            skt.sendto("LOSER",adr)
             break
         elif resultado ==1:
             print("XIS VENCE A PARTIDA. ESTÁ LENDÁRIO!!")
+            skt.sendto("WINNER",adr)
             break
         elif resultado == "EMPATE":
             print("EMPATOOOOOU!!! DOIS NOOBS JOGANDO! LIXOS!")
+            skt.sendto("DRAW")
             break
         else:
             if vez == 0:
@@ -91,27 +94,20 @@ def pvp_online_servidor(skt):
 
                 
 def pvp_online_cliente(skt,servidorIP):
-    skt.sendto("HANDSHAKE",(servidorIP,5001))
+    skt.sendto("HANDSHAKE".encode(),(servidorIP,5001))
     while True:
         print("Esperando a vez...")
-        msg,adr = recvfrom(1024)
+        msg,adr = skt.recvfrom(1024)
         msg = msg.decode()
-        msg = msg[1:-1]
-        tabuleiro = msg.split(", ")
-        i = 0
-        while i<len(tabuleiro):
-            tabuleiro[i]=int(tabuleiro[i])
-            i = i+1
-        aux_modules.printarTabuleiro(tabuleiro)
-        print("SUA VEZ")
-        posicao = input(">>> ")
-        skt.sendto(posicao.encode(),(servidorIP,5001))
-        print("Esperando confirmação da jogada...")
-        msg,adr = recvfrom(1024)
-        if msg.decode == "JOGADA INCORRETA, PAI":
-            print("Perdeu a vez")
+        if msg[0]!="[":
+            if msg == "WINNER":
+                print("Boa, boy. Tu gera, visse.")
+                break
+            elif msg == "LOSER":
+                print("Tu é fraco. Foi gg izi")
+            else:
+                print("Empatou, comadres")
         else:
-            msg = msg.decode()
             msg = msg[1:-1]
             tabuleiro = msg.split(", ")
             i = 0
@@ -119,6 +115,22 @@ def pvp_online_cliente(skt,servidorIP):
                 tabuleiro[i]=int(tabuleiro[i])
                 i = i+1
             aux_modules.printarTabuleiro(tabuleiro)
+            print("SUA VEZ")
+            posicao = input(">>> ")
+            skt.sendto(posicao.encode(),(servidorIP,5001))
+            print("Esperando confirmação da jogada...")
+            msg,adr = skt.recvfrom(1024)
+            if msg.decode == "JOGADA INCORRETA, PAI":
+                print("Perdeu a vez")
+            else:
+                msg = msg.decode()
+                msg = msg[1:-1]
+                tabuleiro = msg.split(", ")
+                i = 0
+                while i<len(tabuleiro):
+                    tabuleiro[i]=int(tabuleiro[i])
+                    i = i+1
+                aux_modules.printarTabuleiro(tabuleiro)
         
         
 
