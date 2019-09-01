@@ -72,7 +72,7 @@ def pvp_online_servidor(skt):
             posicao = -1
 
             # Envia o tabuleiro
-            skt.sendto(str(tabuleiro).encode(),adr)s
+            skt.sendto(str(tabuleiro).encode(),adr)
 
             # Caso seja o servidor que vai jogar, posição é definido por input
             if vez == 0:                
@@ -98,7 +98,7 @@ def pvp_online_servidor(skt):
                     print("O cliente é muito noob, errou.")
                     skt.sendto("MOVE_ERROR".encode(),adr)
                 else:
-                    print("Jogada incorreta. Perdeu, pai"))
+                    print("Jogada incorreta. Perdeu, pai")
                     
             aux_modules.printarTabuleiro(tabuleiro)
 
