@@ -90,8 +90,7 @@ def pvp_online_servidor(skt):
                 tabuleiro[posicao] = vez
                 # Se a jogada foi do cliente, avisar a ele que deu tudo certo
                 # enviando o tabuleiro preenchido para ele.
-                if vez == 1:
-                    skt.sendto(str(tabuleiro).encode(),adr)
+                skt.sendto(str(tabuleiro).encode(),adr)
             else:
                 #Caso a jogada tenha sido incorreta                
                 if vez == 1:
