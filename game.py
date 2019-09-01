@@ -123,7 +123,7 @@ def pvp_online_cliente(skt,servidorIP):
             print("Esperando confirmação da jogada...")
             msg,adr = skt.recvfrom(1024)
             if msg.decode == "JOGADA INCORRETA, PAI":
-                print("Perdeu a vez")
+                print("adversário errou. Sua vez")
             else:
                 msg = msg.decode()
                 msg = msg[1:-1]
