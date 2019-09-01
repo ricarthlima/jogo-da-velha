@@ -85,6 +85,10 @@ def pvp_online_servidor(skt):
                 print("Jogada incorreta. Perdeu, pai")
                 if vez == 1:
                     skt.sendto("JOGADA INCORRETA, PAI".encode(),adr)
+                else:
+                    msg,adr = skt.recvfrom(1024)
+                    print(msg.decode())
+                    
             aux_modules.printarTabuleiro(tabuleiro)
 
             if vez == 0:
@@ -119,11 +123,17 @@ def pvp_online_cliente(skt,servidorIP):
             aux_modules.printarTabuleiro(tabuleiro)
             print("SUA VEZ")
             posicao = input(">>> ")
-            skt.sendto(posicao.encode(),(servidorIP,5001))
-            print("Esperando confirmação da jogada...")
-            msg,adr = skt.recvfrom(1024)
+            if posicao>=0 and posicao <=8 and tabuleiro[posicao]==-1:
+                skt.sendto(posicao.encode(),(servidorIP,5001))
+                print("Esperando confirmação da jogada...")
+                msg,adr = skt.recvfrom(1024)
+            else:
+                print("Jogada incorreta. Perdeu, pai")
+                if vez == 0:
+                    skt.sendto("Jogou errado.".encode(),(servidorIP,5001))
+
             if msg.decode == "JOGADA INCORRETA, PAI":
-                print("adversário errou. Sua vez")
+                print("Adversário errou. Sua vez")
             else:
                 msg = msg.decode()
                 msg = msg[1:-1]
