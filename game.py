@@ -39,11 +39,10 @@ def pvp_online():
     if escolha == "1":
         servidorIP = input("Digite o IP do servidor: ")
         pvp_online_cliente(skt,servidorIP)
-    elif escolha == "2":
+    else:
         skt.bind(("",5001))
         pvp_online_servidor(skt)
-    else:
-        print("Ocorreu um erro inesperado. Corrige aí, boy.")
+    
 
         
 def pvp_online_servidor(skt):

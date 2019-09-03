@@ -1,6 +1,7 @@
 def condicao_vitoria(tabuleiro):
     '''
-    Esta função recebe uma lista que representa um tabuleiro, com tamanho 8, e retorna o valor do vencedor. Caso não haja vencedor, esta retorna "false". 
+    Esta função recebe uma lista que representa um tabuleiro, com tamanho 8,
+    e retorna o valor do vencedor. Caso não haja vencedor, esta retorna "false". 
     '''
     if (tabuleiro[0] == tabuleiro[1] and tabuleiro[1] == tabuleiro[2]) and tabuleiro[0]!= -1:
         return tabuleiro[0]
